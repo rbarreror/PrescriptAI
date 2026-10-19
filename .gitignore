@@ -1,5 +1,16 @@
-# Ignorar credenciales y configuraciones de Kaggle
+# Ignore kaggle credentials and configuration
 .kaggle/
 
-# Ignorar la carpeta de datos crudos
+# Ignore data files
 data/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Ignore VSCode settings
+.vscode/
+
+# Ignore TODO
+TODO

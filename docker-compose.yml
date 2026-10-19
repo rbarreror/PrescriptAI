@@ -1,9 +1,32 @@
+# docker-compose.yml
 services:
-  workspace:
-    build:
-      context: .
-      dockerfile: .devcontainer/Dockerfile
+  postgres:
+    image: timescale/timescaledb:latest-pg16
+    container_name: prescriptai_db_container
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - prescriptai_network
     volumes:
-      - .:/workspaces/prescriptai:cached
-    ipc: host
-    command: sleep infinity
+      # Named volume for persistent database storage
+      - postgres_data:/var/lib/postgresql/data
+      # Bind mount for database initialization script
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  prescriptai_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
