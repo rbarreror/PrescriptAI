@@ -23,6 +23,22 @@ services:
       timeout: 5s
       retries: 5
 
+# Contenedor de desarrollo para el motor de Machine Learning
+  ml_engine:
+    build:
+      context: .
+      dockerfile: .devcontainer/ml_engine/Dockerfile
+      target: development
+    volumes:
+      # Montaje de todo el repositorio en el espacio de trabajo del contenedor
+      - .:/workspaces/prescriptai:cached
+    ipc: host  # Evita errores de memoria compartida al procesar matrices y entrenar árboles
+    networks:
+      - prescriptai_network
+    depends_on:
+      - postgres
+    command: sleep infinity
+
 networks:
   prescriptai_network:
     driver: bridge

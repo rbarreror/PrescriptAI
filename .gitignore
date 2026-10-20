@@ -14,3 +14,19 @@ data/
 
 # Ignore TODO
 TODO
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Packaging and distribution builds
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+
+# Environments and testing
+.pytest_cache/
+.coverage

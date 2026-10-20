@@ -1,0 +1,27 @@
+{
+  "name": "PrescriptAI - ML Engine",
+  "dockerComposeFile": "../../docker-compose.yml",
+  "service": "ml_engine",
+  "workspaceFolder": "/workspaces/prescriptai",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "charliermarsh.ruff",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
+      ]
+    }
+  },
+  "postCreateCommand": "pip install -e 'apps/ml_engine[dev]'",
+  "remoteUser": "vscode"
+}
