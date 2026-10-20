@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar dependencias fijadas del motor de ML
-COPY apps/ml_engine/requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r /tmp/requirements.txt
+# COPY apps/ml_engine/requirements.txt /tmp/requirements.txt
+# RUN pip install --no-cache-dir --upgrade pip \
+#     && pip install --no-cache-dir -r /tmp/requirements.txt
 
 # ----------------------------------------------------
 # 2. Target DEVELOPMENT: para VS Code Dev Containers
@@ -39,6 +39,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 USER $USERNAME
+
+# Garantiza que los binarios instalados por pip estén accesibles globalmente en la terminal
+ENV PATH="/home/vscode/.local/bin:${PATH}"
 
 # ----------------------------------------------------
 # 3. Target PRODUCTION: imagen final autocontenida
