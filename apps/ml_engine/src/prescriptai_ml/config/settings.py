@@ -1,8 +1,10 @@
+import logging
 from functools import lru_cache
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
 
+logger = logging.getLogger(__name__)
 
 class DatabaseSettings(BaseSettings):
     """Database connection settings loaded from environment variables."""
@@ -31,4 +33,6 @@ class DatabaseSettings(BaseSettings):
 @lru_cache(maxsize=1)
 def get_db_settings() -> DatabaseSettings:
     """Return a cached singleton instance of the database settings."""
+
+    logger.info("Initializing database settings.")
     return DatabaseSettings()
